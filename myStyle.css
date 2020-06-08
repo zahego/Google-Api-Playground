@@ -1,0 +1,24 @@
+body{
+    margin:0;
+    padding:0;
+}
+#map_placeholder{
+height: 60vh;
+width: 80vw;
+
+position: relative;
+}
+
+#full_screen{
+    text-align:center;
+    display:flex;
+align-items: center;
+flex-direction: column;
+    height:100%;
+    width:100%;
+    background-color: rgb(19, 21, 27);
+    position:absolute;
+}
+#full_screen>h1{
+    color: cornsilk;
+}

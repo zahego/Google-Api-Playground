@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Google API playground</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="myStyle.css">
+</head>
+
+<body>
+    <div id="full_screen">
+        <h1>Google Map</h1>
+        <div id="map_placeholder"></div>
+    </div>
+    <script>
+        function initMap() {
+            //option to attached at the beginning
+            var options = {
+                zoom: 6,
+                center: { lat: 39.097291, lng: -82.98601 }
+            }
+            //create a map
+            var mainMapGoogle = new google.maps.Map(document.getElementById('map_placeholder'), options);
+
+
+            google.maps.event.addListener(mainMapGoogle, 'click',
+            function(event){
+                console.log("here");
+                //latLng short for latitute and longitude
+                addMarker([{location:event.latLng}]);
+            });
+
+            markerDatabase = [{
+                location: { lat: 39.097291, lng: -82.98601 },
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                content: '<h1>ha ha, mate</h1>',
+            },
+            {
+                location: { lat: 39.197287, lng: -82.58641 },
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                content: '<h1>ha ha, mate</h1>',
+            }];
+
+            addMarker(markerDatabase);
+            //add marker-multiple
+            function addMarker(markerList) {
+
+                markerList.map(markerItem => {
+                    console.log(markerItem.location)
+                    var marker = new google.maps.Marker({
+                        position: markerItem.location,
+                        map: mainMapGoogle,
+                    })
+                    if(markerItem.icon){
+                        marker.setIcon(markerItem.icon)
+                    }
+                    if(markerItem.content){
+                    var comment = new google.maps.InfoWindow({
+                        content: markerItem.content,
+                    });
+                    marker.addListener('click', function () {
+                        comment.open(mainMapGoogle, marker);
+                    })
+                }
+
+                }
+                )
+            };
+
+            
+
+            //add a marker-single
+            /*var markerFunny=new google.maps.Marker({
+                position: {lat:39.097291, lng:-82.98601},
+                map:mainMapGoogle,
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+
+            });*/
+            //popup comment to go along with the marker, could be just name or a funny comment
+            /*var popUpComment=new google.maps.InfoWindow({
+                content: '<h1>ha ha, you clicked on pp creek</h1>'
+            });
+            markerFunny.addListener('click', function(){
+                popUpComment.open(mainMapGoogle, markerFunny);
+            })*/
+
+
+        }
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDohIoTSLkvePJhth5V4XAuFEolrS9gwhE&callback=initMap"
+        type="text/javascript"></script>
+
+</body>
+
+</html>
